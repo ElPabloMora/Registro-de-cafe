@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+{% block title %}
+Sent Data
+{% endblock %}
+{% block content %}
+<div>
+    <main>
+        <section>
+            <div class="col-md-5 ">
+                <form method="post" action="{{ url_for('sent_data')}}">
+                    <fieldset>
+                        <legend>Sent Date</legend>
+                        <div class="form-group">
+                          <label  class="form-label mt-4">Correo a enviar los datos</label>
+                          <input type="text" class="form-control" name="email_user">
+                        </div>
+                        <button type="submit" class="btn btn-info">Enviar Datos</button>
+                      </fieldset>
+                </form>
+            </div>
+        </section>
+    </main>
+</div>
+{% endblock %}

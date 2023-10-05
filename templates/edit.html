@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+{% block title %}
+Edit 
+{% endblock %}
+{% block content %}
+<main>
+    <section>
+        <div class="col-md-5">
+            <form method="post" action="/update/{{contact.0}}">
+                <fieldset>
+                  <legend>Edit user</legend>
+                  <div class="form-group">
+                    <label  class="form-label mt-4">Nombre</label>
+                    <input type="text" class="form-control" name="name">
+                  </div>
+                  <div class="form-group">
+                    <label  class="form-label mt-4">Cajuelas</label>
+                    <input type="text" class="form-control" name="amount">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </fieldset>
+              </form>
+        </div>
+    </section>
+</main>
+{% endblock %}
