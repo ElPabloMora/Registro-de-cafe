@@ -173,6 +173,7 @@ def sent_data():
 
     
 @app.route('/calculator',methods=['GET','POST'])
+@login_required
 def calculator():
     cur = mysql.connection.cursor()
     sql = 'SELECT * FROM staff'

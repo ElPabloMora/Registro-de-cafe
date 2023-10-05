@@ -1,9 +1,9 @@
 {% extends 'index.html' %} {% block title %} Calculator {% endblock %} {% block
 content %}
 
-<main>
-  <section>
-    <div class="col-md-5">
+<div class="row">
+  <div class="col-md-5">
+    <div class="card card-body">
       <form method="post" action="{{ url_for('add_contact') }}">
         <fieldset>
           <legend>Calculator</legend>
@@ -19,10 +19,9 @@ content %}
         </fieldset>
       </form>
     </div>
-  </section>
-  <section>
+  </div>
     <div class="col-md-7">
-      <table class="table table-hover">
+      <table class="table table-hovers">
         <thead>
           <tr class="table">
             <td>Nombre</td>
@@ -36,22 +35,19 @@ content %}
             <td>{{ contact.1 }}</td>
             <td>{{ contact.2 }}</td>
             <td>
-              <a href="/edit/{{ contact.0 }}" class="btn btn-outline-secondary"
-                >Edit</a
-              >
-              <a href="/delete/{{contact.0}}" class="btn btn-outline-danger"
-                >Delete</a
-              >
+              <a href="/edit/{{ contact.0 }}" class="btn btn-outline-secondary">Edit</a>
+              <a href="/delete/{{contact.0}}" class="btn btn-outline-danger">Delete</a>
             </td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
-  </section>
-  <a class="btn btn-success" href="{{ url_for('sent_data')}}">Enviar datos</a>
-  <a class="btn btn-dark" href="{{ url_for('delete_all')}}">Delete all</a>
-  <a class="btn btn-danger" href="{{ url_for('logout') }}">logout</a>
+</div>
+
+<a class="btn btn-success" href="{{ url_for('sent_data')}}">Enviar datos</a>
+<a class="btn btn-dark" href="{{ url_for('delete_all')}}">Delete all</a>
+<a class="btn btn-danger" href="{{ url_for('logout') }}">logout</a>
 </main>
 
 {% endblock %}
