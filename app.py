@@ -140,6 +140,16 @@ def delete_u(id):
     return redirect(url_for('calculator'))
 
 
+#Elimina todos los datos de la base de datos (staff) 
+@app.route('/delete_all')
+def delete_all():
+    cur = mysql.connection.cursor()
+    cur.execute('DELETE FROM staff')
+    mysql.connection.commit()
+    cur.close()
+    return redirect(url_for('calculator'))
+
+
 
 @app.route('/sent_data', methods = ['GET','POST'])
 def sent_data():  
