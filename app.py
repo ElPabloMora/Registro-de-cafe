@@ -149,9 +149,11 @@ def sent_data():
         cur.execute(sql)
         data = cur.fetchall()
         email_user = request.form['email_user']
-        with open('templates/email.html','r') as archivo:
-            mail = archivo.read()
-        send_gmail = modelSent.send(email_user,mail)
+        message = []
+        for contact in data:
+            i = '{},{}'.format(contact[1],contact[2])
+            message.append(i)
+        send_gmail = modelSent.send(email_user,str(message))
         if send_gmail != None:
             flash('Sented')
             return redirect('calculator')

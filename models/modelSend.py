@@ -1,5 +1,4 @@
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+from email.message import EmailMessage
 from datetime import date
 import smtplib
 import ssl
@@ -7,14 +6,14 @@ import ssl
 class modelSent():
     
     @classmethod
-    def send(sefl, destinario,html):
+    def send(sefl, destinario,message):
         try:
-            email = MIMEMultipart()
+            email = EmailMessage()
             sender = 'pablomorabarrantes@gmail.com'
             email['From'] = sender
             email['To'] = destinario
             email['Subject'] = 'Registro de cafe de la fecha {}'.format(date.today()) 
-            email.attach(MIMEText(html,'html'))
+            email.set_content(message)
             
             with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
                 smtp.login(sender,'zghacocmitefpkcv')
