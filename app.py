@@ -4,6 +4,8 @@ from werkzeug.security import generate_password_hash
 from models.modelUser import ModelUser
 from models.modelSend import modelSent
 from models.entities.user import User
+from openpyxl import Workbook
+from datetime import date
 from flask_login import LoginManager , login_user, logout_user, login_required
 
 
@@ -158,12 +160,21 @@ def sent_data():
         sql = 'SELECT * FROM staff'
         cur.execute(sql)
         data = cur.fetchall()
+        print(data)
         email_user = request.form['email_user']
-        message = []
+        # Here, the system what create bucle the file exel
+        book = Workbook()
+        sheet = book.active
+        sheet['C4'] = 'Nombres'
+        sheet['D4'] = 'Cajuelas'
+        n = 5
         for contact in data:
-            i = '{},{}'.format(contact[1],contact[2])
-            message.append(i)
-        send_gmail = modelSent.send(email_user,str(message))
+            for num in range(n,n+1):
+                sheet[f'C{num}'] = contact[1]
+                sheet[f'D{num}'] = contact[2]
+                n += 1
+        book.save(f'Registro del dia {date.today()}.xlsx')
+        send_gmail = modelSent.send(email_user)
         if send_gmail != None:
             flash('Sented')
             return redirect('calculator')

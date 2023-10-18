@@ -1,0 +1,7 @@
+
+
+data = ((29, 'Pablo Mora Barrantes', 5.25), (30, 'Ana', 2.25))
+
+for contact in data:
+    for l, r in zip(contact[1], str(contact[2])):
+        print(l,r)
