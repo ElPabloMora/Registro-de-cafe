@@ -7,7 +7,7 @@ from models.entities.user import User
 from openpyxl import Workbook
 from datetime import date
 from flask_login import LoginManager , login_user, logout_user, login_required
-
+import os
 
 
 app = Flask(__name__)
@@ -162,7 +162,7 @@ def sent_data():
         data = cur.fetchall()
         print(data)
         email_user = request.form['email_user']
-        # Here, the system what create bucle the file exel
+        # Here, the system what create bucle the file excel
         book = Workbook()
         sheet = book.active
         sheet['C4'] = 'Nombres'
@@ -173,9 +173,12 @@ def sent_data():
                 sheet[f'C{num}'] = contact[1]
                 sheet[f'D{num}'] = contact[2]
                 n += 1
+        #save book excel
         book.save(f'Registro del dia {date.today()}.xlsx')
+        #send the email
         send_gmail = modelSent.send(email_user)
         if send_gmail != None:
+            os.remove(f'Registro del dia {date.today()}.xlsx')
             flash('Sented')
             return redirect('calculator')
     return render_template('sent_data.html')
