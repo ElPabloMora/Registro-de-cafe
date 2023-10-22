@@ -2,6 +2,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
 from datetime import date
+from openpyxl import Workbook
 import smtplib
 import ssl
 
@@ -31,6 +32,22 @@ class modelSent():
             
         except Exception as ex:
             raise Exception(ex)
+    @classmethod
+    def create_excel(self,data):
+         # Here, the system what create bucle the file excel
+        book = Workbook()
+        sheet = book.active
+        sheet['C4'] = 'Nombres'
+        sheet['D4'] = 'Cajuelas'
+        n = 5
+        for contact in data:
+            for num in range(n,n+1):
+                sheet[f'C{num}'] = contact[1]
+                sheet[f'D{num}'] = contact[2]
+                n += 1
+        #save book excel
+        book.save(f'Registro del dia {date.today()}.xlsx')
+        return book
 
 
 

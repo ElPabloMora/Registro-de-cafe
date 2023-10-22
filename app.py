@@ -4,7 +4,6 @@ from werkzeug.security import generate_password_hash
 from models.modelUser import ModelUser
 from models.modelSend import modelSent
 from models.entities.user import User
-from openpyxl import Workbook
 from datetime import date
 from flask_login import LoginManager , login_user, logout_user, login_required
 import os
@@ -30,12 +29,6 @@ app.secret_key= 'password'
 def load_user(id):
     return ModelUser.get_by_id(mysql,id)
 
-@app.before_request
-def before_resquest():
-    if 'username' in session:
-        g.user = session['username']
-    else:
-        g.user = None
 
 
 @app.route("/")
@@ -160,27 +153,16 @@ def sent_data():
         sql = 'SELECT * FROM staff'
         cur.execute(sql)
         data = cur.fetchall()
-        print(data)
         email_user = request.form['email_user']
-        # Here, the system what create bucle the file excel
-        book = Workbook()
-        sheet = book.active
-        sheet['C4'] = 'Nombres'
-        sheet['D4'] = 'Cajuelas'
-        n = 5
-        for contact in data:
-            for num in range(n,n+1):
-                sheet[f'C{num}'] = contact[1]
-                sheet[f'D{num}'] = contact[2]
-                n += 1
-        #save book excel
-        book.save(f'Registro del dia {date.today()}.xlsx')
+        #create excel
+        createecxel = modelSent.create_excel(data)
         #send the email
-        send_gmail = modelSent.send(email_user)
-        if send_gmail != None:
-            os.remove(f'Registro del dia {date.today()}.xlsx')
-            flash('Sented')
-            return redirect('calculator')
+        if createecxel != None:   
+            send_gmail = modelSent.send(email_user)
+            if send_gmail != None:
+                os.remove(f'Registro del dia {date.today()}.xlsx')
+                flash('Sented')
+                return redirect('delete_all')
     return render_template('sent_data.html')
 
 
