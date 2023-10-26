@@ -1,0 +1,16 @@
+{% from '_renders.html' import render_messages %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}">
+</head>
+<body>
+    
+    {{render_messages(messages)}}
+
+    {% block content %}{% endblock %}
+    
+</body>
+</html>

@@ -1,0 +1,53 @@
+{% extends 'index.html' %} {% block title %} Calculator {% endblock %} {% block
+content %}
+
+<div class="row">
+  <div class="col-md-5">
+    <div class="card card-body">
+      <form method="post" action="{{ url_for('baseControl.add_contact') }}">
+        <fieldset>
+          <legend>Calculator</legend>
+          <div class="form-group">
+            <label class="form-label mt-4">Nombre</label>
+            <input type="text" class="form-control" name="name" />
+          </div>
+          <div class="form-group">
+            <label class="form-label mt-4">Cajuelas</label>
+            <input type="text" class="form-control" name="amount" />
+          </div>
+          <button type="submit" class="btn btn-info">Submit</button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+    <div class="col-md-7">
+      <table class="table table-hovers">
+        <thead>
+          <tr class="table">
+            <td>Nombre</td>
+            <td>Cajuelas</td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for contact in contacts %}
+          <tr class="table-active">
+            <td>{{ contact.1 }}</td>
+            <td>{{ contact.2 }}</td>
+            <td>
+              <a href="/edit/{{ contact.0 }}" class="btn btn-outline-secondary">Edit</a>
+              <a href="/delete/{{contact.0}}" class="btn btn-outline-danger">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+</div>
+
+<a class="btn btn-success" href="{{ url_for('baseControl.sent_data')}}">Enviar datos</a>
+<a class="btn btn-dark" href="{{ url_for('baseControl.delete_all')}}">Delete all</a>
+<a class="btn btn-danger" href="{{ url_for('baseControl.logout') }}">logout</a>
+</main>
+
+{% endblock %}
