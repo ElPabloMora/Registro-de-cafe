@@ -1,5 +1,11 @@
-venv/
-.env
+pyvenv.cfg
+
+/Scripts
+
+/Lib
+
+/Include
+
 
 __pycache__/
 *.py[cod]
