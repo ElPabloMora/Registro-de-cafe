@@ -7,10 +7,10 @@ Home
     <section>
         <h1>Bienvenido al registro de cafe</h1>
         <div>
-            <form action="{{ url_for('signup') }}">
+            <form action="{{ url_for('user_register.signup') }}">
                 <input class="btn btn-secondary" type="submit" value="Registrarse">
             </form>
-            <form action="{{ url_for('loginup') }}">
+            <form action="{{ url_for('user_register.loginup') }}">
                 <input class="btn btn-primary" type="submit" value="Iniciar Sesion">
             </form>
         </div>

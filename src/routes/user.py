@@ -3,12 +3,20 @@ from Database.database import connect_base
 from werkzeug.security import generate_password_hash
 from Models.userg import User
 from Models.modelUser import ModelUser
-
+from flask_login import login_user , logout_user
 
 conect = connect_base()
 cursor =conect.cursor()
 
+
+
 user_register = Blueprint('user_register',__name__)
+
+
+@user_register.route('/')
+def index():
+    return render_template('home.html')
+
 
 
 @user_register.route('/signup', methods=['GET','POST'])
@@ -33,10 +41,18 @@ def loginup():
         logged_user = ModelUser.login(conect,user)
         if logged_user != None:
             if logged_user.password:
+                login_user(logged_user)
                 flash("You're logged in!",'alert-success')
                 return redirect(url_for('baseControl.calculator'))
             else:
                 flash('Invalid Password!','alert-danger')
         else:
             flash('User not found!','alert-danger')
+            
     return render_template('loginup.html')
+
+@user_register.route('/logout')
+def logout():
+    logout_user()
+    flash("'You're logged out'")
+    return redirect(url_for('user_register.index'))

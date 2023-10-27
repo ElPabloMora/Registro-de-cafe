@@ -1,4 +1,4 @@
-
+from .userg import User
 
 class ModelUser():
     
@@ -16,4 +16,20 @@ class ModelUser():
             else:
                 return None
         except Exception as ex:
-            raise Exception(ex)    
+            raise Exception(ex)
+        
+        
+    @classmethod
+    def get_by_id(self,db,id):
+        try:
+            cursor = db.cursor()
+            mysql = "SELECT id,username,mail FROM login WHERE id = '{}' ".format(id)
+            cursor.execute(mysql)
+            row = cursor.fetchone()
+            if row != None:
+                return User(row[0],row[1],row[2],None)
+            else:
+                return None
+        except Exception as ex:
+            raise Exception(ex)
+            

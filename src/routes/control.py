@@ -3,7 +3,6 @@ from Database.database import connect_base
 from datetime import date
 import os
 from Models.modelSend import modelSend
-from flask_login import LoginManager , login_user, logout_user, login_required
 
 conect = connect_base()
 cursor =conect.cursor()
@@ -12,11 +11,6 @@ cursor =conect.cursor()
 baseControl = Blueprint('baseControl',__name__,url_prefix='/base')
 
 
-@baseControl.route('/logout')
-def logout():
-    logout_user()
-    flash("'You're logged out'")
-    return redirect(url_for('index'))
 
 @baseControl.route('/',methods=['GET','POST'])
 def calculator():
@@ -32,9 +26,9 @@ def add_contact():
         name = request.form['name']
         amount = request.form['amount']
         cursor.execute('INSERT INTO staff (name,amount) VALUES (%s,%s)',(name,amount))
-        conect.connection.commit()
+        conect.commit()
         flash('registration has been made','alert-success')
-        return redirect(url_for('calculator'))
+        return redirect(url_for('baseControl.calculator'))
     
     
     
@@ -54,25 +48,25 @@ def update(id):
     name = request.form['name']
     amount = request.form['amount']
     cursor.execute('UPDATE staff SET name=%s, amount=%s WHERE id=%s',(name,amount,id))
-    conect.connection.commit()
+    conect.commit()
     flash('updated name','alert-success')
-    return redirect(url_for('calculator'))
+    return redirect(url_for('baseControl.calculator'))
     
 
 @baseControl.route('/delete/<id>', methods=['GET','POST'])
 def delete_u(id):
     cursor.execute('DELETE FROM staff WHERE id ={}'.format(id))
     flash('user deleted')
-    conect.connection.commit()
-    return redirect(url_for('calculator'))
+    conect.commit()
+    return redirect(url_for('baseControl.calculator'))
 
 
 #Elimina todos los datos de la base de datos (staff) 
 @baseControl.route('/delete_all')
 def delete_all():
     cursor.execute('DELETE FROM staff')
-    conect.connection.commit()
-    return redirect(url_for('calculator'))
+    conect.commit()
+    return redirect(url_for('baseControl.calculator'))
 
 @baseControl.route('/sent_data', methods = ['GET','POST'])
 def sent_data():  
@@ -89,5 +83,5 @@ def sent_data():
             if send_gmail != None:
                 os.remove(f'Registro del dia {date.today()}.xlsx')
                 flash('Sented','alert-success')
-                return redirect('delete_all')
+                return redirect(url_for('baseControl.delete_all'))
     return render_template('sent_data.html')

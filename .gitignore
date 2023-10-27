@@ -1,10 +1,4 @@
-pyvenv.cfg
-
-/Scripts
-
-/Lib
-
-/Include
+/env
 
 
 __pycache__/

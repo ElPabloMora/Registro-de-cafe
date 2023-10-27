@@ -43,7 +43,7 @@ class modelSend():
         sheet['D4'] = 'Cajuelas'
         n = 5
         for contact in data:
-            for num in range(n,n+5):
+            for num in range(n,n+1):
                 sheet[f'C{num}'] = contact[1]
                 sheet[f'D{num}'] = contact[2]  
                 n += 1
