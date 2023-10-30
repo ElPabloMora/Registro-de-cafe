@@ -27,7 +27,6 @@ def add_contact():
         amount = request.form['amount']
         cursor.execute('INSERT INTO staff (name,amount) VALUES (%s,%s)',(name,amount))
         conect.commit()
-        flash('registration has been made','alert-success')
         return redirect(url_for('baseControl.calculator'))
     
     
@@ -43,20 +42,20 @@ def edit(id):
 
 
 
-@baseControl.route('/update/<id>', methods=['GET','POST'])
+@baseControl.route('edit/update/<id>', methods=['GET','POST'])
 def update(id):
     name = request.form['name']
     amount = request.form['amount']
     cursor.execute('UPDATE staff SET name=%s, amount=%s WHERE id=%s',(name,amount,id))
     conect.commit()
-    flash('updated name','alert-success')
+    flash('updated name!','alert-success')
     return redirect(url_for('baseControl.calculator'))
     
 
 @baseControl.route('/delete/<id>', methods=['GET','POST'])
 def delete_u(id):
     cursor.execute('DELETE FROM staff WHERE id ={}'.format(id))
-    flash('user deleted')
+    flash('user deleted',"alert-danger")
     conect.commit()
     return redirect(url_for('baseControl.calculator'))
 

@@ -54,5 +54,5 @@ def loginup():
 @user_register.route('/logout')
 def logout():
     logout_user()
-    flash("'You're logged out'")
+    flash("'You're logged out'",'alert-info')
     return redirect(url_for('user_register.index'))
