@@ -13,11 +13,11 @@ baseControl = Blueprint('baseControl',__name__,url_prefix='/base')
 
 
 @baseControl.route('/',methods=['GET','POST'])
-def calculator():
+def WorkerRegistration():
     sql = 'SELECT * FROM staff'
     cursor.execute(sql)
     data = cursor.fetchall()
-    return render_template('calculator.html', contacts = data)
+    return render_template('WorkerRegistration.html', contacts = data)
 
 
 @baseControl.route('/add_contact', methods=['GET','POST'])
@@ -27,7 +27,7 @@ def add_contact():
         amount = request.form['amount']
         cursor.execute('INSERT INTO staff (name,amount) VALUES (%s,%s)',(name,amount))
         conect.commit()
-        return redirect(url_for('baseControl.calculator'))
+        return redirect(url_for('baseControl.WorkerRegistration'))
     
     
     
@@ -49,7 +49,7 @@ def update(id):
     cursor.execute('UPDATE staff SET name=%s, amount=%s WHERE id=%s',(name,amount,id))
     conect.commit()
     flash('updated name!','alert-success')
-    return redirect(url_for('baseControl.calculator'))
+    return redirect(url_for('baseControl.WorkerRegistration'))
     
 
 @baseControl.route('/delete/<id>', methods=['GET','POST'])
@@ -57,7 +57,7 @@ def delete_u(id):
     cursor.execute('DELETE FROM staff WHERE id ={}'.format(id))
     flash('user deleted',"alert-danger")
     conect.commit()
-    return redirect(url_for('baseControl.calculator'))
+    return redirect(url_for('baseControl.WorkerRegistration'))
 
 
 #Elimina todos los datos de la base de datos (staff) 
@@ -65,13 +65,14 @@ def delete_u(id):
 def delete_all():
     cursor.execute('DELETE FROM staff')
     conect.commit()
-    return redirect(url_for('baseControl.calculator'))
+    return redirect(url_for('baseControl.WorkerRegistration'))
 
 @baseControl.route('/sent_data', methods = ['GET','POST'])
 def sent_data():  
     if request.method == 'POST':
         sql = 'SELECT * FROM staff'
         cursor.execute(sql)
+        #with fetchall seleccionamos todos los resultados
         data = cursor.fetchall()
         email_user = request.form['email_user']
         #create excel

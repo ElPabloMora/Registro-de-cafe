@@ -25,6 +25,7 @@ def signup():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
+        #use werkzeug for generate password hash
         password_hash = generate_password_hash(password,'sha256')
         cursor.execute('INSERT INTO login (username,mail,password) VALUES (%s,%s,%s)',(username,email,password_hash))
         conect.commit()
@@ -43,7 +44,7 @@ def loginup():
             if logged_user.password:
                 login_user(logged_user)
                 flash("You're logged in!",'alert-success')
-                return redirect(url_for('baseControl.calculator'))
+                return redirect(url_for('baseControl.WorkerRegistration'))
             else:
                 flash('Invalid Password!','alert-danger')
         else:

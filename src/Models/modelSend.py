@@ -4,7 +4,7 @@ from email import encoders
 from datetime import date
 from openpyxl import Workbook
 import smtplib
-import ssl
+
 
 class modelSend():
     

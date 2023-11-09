@@ -1,4 +1,4 @@
-{% extends 'index.html' %} {% block title %} Calculator {% endblock %} {% block
+{% extends 'index.html' %} {% block title %} Worker registration {% endblock %} {% block
 content %}
 
 <div class="row">
@@ -6,7 +6,7 @@ content %}
     <div class="card card-body">
       <form method="post" action="{{ url_for('baseControl.add_contact') }}">
         <fieldset>
-          <legend>Calculator</legend>
+          <legend>Worker registration</legend>
           <div class="form-group">
             <label class="form-label mt-4">Nombre</label>
             <input type="text" class="form-control" name="name" />
@@ -36,7 +36,7 @@ content %}
             <td>{{ contact.2 }}</td>
             <td>
               <a href="/base/edit/{{ contact.0 }}" class="btn btn-outline-secondary">Edit</a>
-              <a href="/base/delete/{{contact.0}}" class="btn btn-outline-danger">Delete</a>
+              <a href="/base/delete/{{contact.0}}" class="btn btn-outline-danger btn-delete">Delete</a>
             </td>
           </tr>
           {% endfor %}
@@ -46,8 +46,8 @@ content %}
 </div>
 
 <a class="btn btn-success" href="{{ url_for('baseControl.sent_data')}}">Enviar datos</a>
-<a class="btn btn-dark" href="{{ url_for('baseControl.delete_all')}}">Delete all</a>
-<a class="btn btn-danger" href="{{ url_for('user_register.logout') }}">logout</a>
+<a class="btn btn-dark btn-delete" href="{{ url_for('baseControl.delete_all')}}">Delete all</a>
+<a class="btn btn-danger btn-logout" href="{{ url_for('user_register.logout') }}">logout</a>
 </main>
 
 {% endblock %}
