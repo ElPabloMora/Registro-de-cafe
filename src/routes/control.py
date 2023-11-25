@@ -25,9 +25,13 @@ def add_contact():
     if request.method == 'POST':
         name = request.form['name']
         amount = request.form['amount']
-        cursor.execute('INSERT INTO staff (name,amount) VALUES (%s,%s)',(name,amount))
-        conect.commit()
-        return redirect(url_for('baseControl.WorkerRegistration'))
+        if name != '' and amount != '':
+            cursor.execute('INSERT INTO staff (name,amount) VALUES (%s,%s)',(name,amount))
+            conect.commit()
+            return redirect(url_for('baseControl.WorkerRegistration'))
+        else:
+            flash('Values ​​are missing!','alert-danger')
+            return redirect(url_for('baseControl.WorkerRegistration'))
     
     
     

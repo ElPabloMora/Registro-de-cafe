@@ -25,15 +25,18 @@ def signup():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
-        #use werkzeug for generate password hash
-        password_hash = generate_password_hash(password,'sha256')
-        cursor.execute('INSERT INTO login (username,mail,password) VALUES (%s,%s,%s)',(username,email,password_hash))
-        conect.commit()
-        flash("You're registed successfully",'alert-success')
-        
-        return redirect(url_for('user_register.loginup'))
-    
+        if username != '' and email != '' and password != '':
+            #use werkzeug for generate password hash
+            password_hash = generate_password_hash(password,'sha256')
+            cursor.execute('INSERT INTO login (username,mail,password,active,namedb) VALUES (%s,%s,%s,%s,%s)',(username,email,password_hash,0,''))
+            conect.commit()
+            flash("You're registed successfully",'alert-success')
+            return redirect(url_for('user_register.loginup'))
+        else:
+            flash('Values ​​are missing!','alert-danger')
+            return redirect(url_for('user_register.signup'))
     return render_template('signup.html')
+
 
 @user_register.route('/loginup', methods=['GET','POST'])
 def loginup():

@@ -19,6 +19,9 @@ content %}
         </fieldset>
       </form>
     </div>
+  <a class="btn btn-success" href="{{ url_for('baseControl.sent_data')}}">Enviar datos</a>
+  <a class="btn btn-dark btn-delete" href="{{ url_for('baseControl.delete_all')}}">Delete all</a>
+  <a class="btn btn-danger btn-logout" href="{{ url_for('user_register.logout') }}">logout</a>
   </div>
     <div class="col-md-7">
       <table class="table table-hovers">
@@ -45,9 +48,7 @@ content %}
     </div>
 </div>
 
-<a class="btn btn-success" href="{{ url_for('baseControl.sent_data')}}">Enviar datos</a>
-<a class="btn btn-dark btn-delete" href="{{ url_for('baseControl.delete_all')}}">Delete all</a>
-<a class="btn btn-danger btn-logout" href="{{ url_for('user_register.logout') }}">logout</a>
+
 </main>
 
 {% endblock %}
