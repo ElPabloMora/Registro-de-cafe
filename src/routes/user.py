@@ -28,8 +28,19 @@ def signup():
         if username != '' and email != '' and password != '':
             #use werkzeug for generate password hash
             password_hash = generate_password_hash(password,'sha256')
-            cursor.execute('INSERT INTO login (username,mail,password,active,namedb) VALUES (%s,%s,%s,%s,%s)',(username,email,password_hash,0,''))
+            #here use "fusion" to combine names
+            fusion=str(username+password)           
+            #here use func hash
+            nameDB= generate_password_hash(fusion,'sha256')
+            #All db
+            cursor.execute('INSERT INTO login (username,mail,password,namedb) VALUES (%s,%s,%s,%s)',(username,email,password_hash,nameDB))
             conect.commit()
+            #create user's db
+            cursor.execute(f"CREATE TABLE {fusion}" 
+                    "(id INT NOT NULL AUTO_INCREMENT,"
+                    "name VARCHAR (255) NOT NULL,"
+                    "amount INT (255) NOT NULL," 
+                    "PRIMARY KEY (id));")
             flash("You're registed successfully",'alert-success')
             return redirect(url_for('user_register.loginup'))
         else:
